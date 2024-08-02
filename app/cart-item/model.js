@@ -6,6 +6,7 @@ const cartItemSchema = Schema({
 		type: String,
 		required: [true, 'Field name tidak boleh kosong'],
 		minlength: [5, 'Field name minimal 5 karakter'],
+		maxlength: [255, 'Field name maksimal 255 karakter'],
 	},
 	qty: {
 		type: Number,
@@ -22,10 +23,12 @@ const cartItemSchema = Schema({
 	user: {
 		type: Schema.Types.ObjectId,
 		ref: 'User',
+		required: [true, 'Field user tidak boleh kosong'],
 	},
 	product: {
 		type: Schema.Types.ObjectId,
 		ref: 'Product',
+		required: [true, 'Field product tidak boleh kosong'],
 	},
 });
 

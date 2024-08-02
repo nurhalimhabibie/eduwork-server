@@ -7,13 +7,6 @@ const getDeliveryAddress = async (req, res, next) => {
 		let address = await DeliveryAddress.find();
 		res.status(200).json(address);
 	} catch (err) {
-		if (err & (err.name === 'ValidationError')) {
-			return res.status(400).json({
-				error: 1,
-				message: err.message,
-				fields: err.errors,
-			});
-		}
 		next(err);
 	}
 };
@@ -42,8 +35,16 @@ const putUpdateDeliveryAddress = async (req, res, next) => {
 		let payload = req.body;
 		let { id } = req.params;
 		let address = await DeliveryAddress.findById(id);
+
+		if (!address) {
+			return res.status(404).json({
+				error: 1,
+				message: 'Delivery address not found',
+			});
+		}
+
 		let subjectAddress = subject('DeliveryAddress', {
-			...address,
+			...address.toObject(),
 			user_id: address.user,
 		});
 		let policy = policyFor(req.user);
@@ -73,8 +74,16 @@ const deleteDeliveryAddress = async (req, res, next) => {
 	try {
 		let { id } = req.params;
 		let address = await DeliveryAddress.findById(id);
+
+		if (!address) {
+			return res.status(404).json({
+				error: 1,
+				message: 'Delivery address not found',
+			});
+		}
+
 		let subjectAddress = subject('DeliveryAddress', {
-			...address,
+			...address.toObject(),
 			user_id: address.user,
 		});
 		let policy = policyFor(req.user);

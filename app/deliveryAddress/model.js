@@ -1,6 +1,6 @@
 const { Schema, model } = require('mongoose');
 
-const deliveryAddressSchema = Schema(
+const deliveryAddressSchema = new Schema(
 	{
 		fullName: {
 			type: String,
@@ -10,7 +10,7 @@ const deliveryAddressSchema = Schema(
 		phoneNumber: {
 			type: String,
 			required: [true, 'Field nomor handphone harus diisi'],
-			minlength: [9, 'Maksimal nomor handphone 9 karakter'],
+			minlength: [9, 'Minimal nomor handphone 9 karakter'],
 			maxlength: [15, 'Maksimal nomor handphone 15 karakter'],
 		},
 		fullStreet: {
@@ -41,6 +41,7 @@ const deliveryAddressSchema = Schema(
 		user: {
 			type: Schema.Types.ObjectId,
 			ref: 'User',
+			required: true,
 		},
 	},
 	{ timestamps: true },

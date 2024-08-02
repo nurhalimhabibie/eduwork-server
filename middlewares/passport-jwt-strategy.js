@@ -8,16 +8,15 @@ function decodeToken() {
 		try {
 			let token = getToken(req);
 
-			if (!token) {
-				return next();
-			}
+			if (!token) return next();
 
 			req.user = jwt.verify(token, config.secretkey);
 
-			const decodedToken = jwt.decode(token, { complete: true });
+			// const decodedToken = jwt.decode(token, { complete: true });
 			// console.log(decodedToken, '<<<< Decode Token');
 
 			let user = await User.findOne({ token: { $in: [token] } });
+
 			if (!user) {
 				res.json({
 					error: 1,
@@ -31,6 +30,8 @@ function decodeToken() {
 					message: err.message,
 				});
 			}
+
+			next(err);
 		}
 		return next();
 	};

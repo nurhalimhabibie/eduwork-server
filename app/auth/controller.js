@@ -50,15 +50,19 @@ const login = (req, res, next) => {
 			});
 		}
 
-		let signed = jwt.sign(user, config.secretkey);
+		try {
+			let signed = jwt.sign(user, config.secretkey);
 
-		await User.findByIdAndUpdate(user._id, { $push: { token: signed } });
+			await User.findByIdAndUpdate(user._id, { $push: { token: signed } });
 
-		res.status(200).json({
-			message: 'Login Successfully',
-			user,
-			token: signed,
-		});
+			res.status(200).json({
+				message: 'Login Successfully',
+				user,
+				token: signed,
+			});
+		} catch (err) {
+			return next(err);
+		}
 	})(req, res, next);
 };
 
@@ -72,7 +76,7 @@ const logout = async (req, res, next) => {
 	);
 
 	if (!token || !user) {
-		res.status(400).json({
+		return res.status(400).json({
 			error: 1,
 			message: 'User Not Found!!!',
 		});
@@ -85,13 +89,16 @@ const logout = async (req, res, next) => {
 };
 
 const me = (req, res, next) => {
+	// console.log('Request to /me endpoint received'); // Log awal saat fungsi dipanggil
+
 	if (!req.user) {
-		res.status(400).json({
+		// console.log('No user found in request'); // Log jika req.user tidak ada
+		return res.status(400).json({
 			error: 1,
 			message: `You're not login or token expired`,
 		});
 	}
-
+	// console.log('User found:', req.user); // Log informasi user jika req.user ada
 	res.status(200).json(req.user);
 };
 

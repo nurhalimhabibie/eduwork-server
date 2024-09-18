@@ -8,6 +8,9 @@ let categorySchema = Schema({
 		maxlenght: [20, 'Field category maksimal 20 karakter'],
 		required: [true, 'Field category harus diisi'],
 	},
+	image_url: {
+		type: String,
+	},
 });
 
 module.exports = model('Category', categorySchema);

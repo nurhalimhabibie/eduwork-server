@@ -13,7 +13,6 @@ const deliveryAddressRoute = require('./app/deliveryAddress/router');
 const cartRoute = require('./app/cart/router');
 const orderRoute = require('./app/order/router');
 const invoiceRoute = require('./app/invoice/router');
-const port = process.env.PORT || 5000;
 
 var app = express();
 
@@ -71,10 +70,6 @@ app.use(function (err, req, res, next) {
 		res.status(err.status || 500);
 		res.render('error');
 	}
-});
-
-app.listen(port, () => {
-	console.log(`Server is running on port ${port}`);
 });
 
 module.exports = app;

@@ -89,16 +89,13 @@ const logout = async (req, res, next) => {
 };
 
 const me = (req, res, next) => {
-	// console.log('Request to /me endpoint received'); // Log awal saat fungsi dipanggil
-
 	if (!req.user) {
-		// console.log('No user found in request'); // Log jika req.user tidak ada
 		return res.status(400).json({
 			error: 1,
 			message: `You're not login or token expired`,
 		});
 	}
-	// console.log('User found:', req.user); // Log informasi user jika req.user ada
+
 	res.status(200).json(req.user);
 };
 

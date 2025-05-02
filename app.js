@@ -4,16 +4,15 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const cors = require('cors');
-const serverless = require('serverless-http');
 const productRoute = require('./app/product/router');
 const categoryRoute = require('./app/category/router');
 const tagRoute = require('./app/tag/router');
 const authRoute = require('./app/auth/router');
-const { decodeToken } = require('./middlewares/passport-jwt-strategy');
 const deliveryAddressRoute = require('./app/deliveryAddress/router');
 const cartRoute = require('./app/cart/router');
 const orderRoute = require('./app/order/router');
 const invoiceRoute = require('./app/invoice/router');
+const { decodeToken } = require('./middlewares/passport-jwt-strategy');
 
 var app = express();
 
@@ -74,4 +73,3 @@ app.use(function (err, req, res, next) {
 });
 
 module.exports = app;
-module.exports.handler = serverless(app);

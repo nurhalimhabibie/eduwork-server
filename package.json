@@ -3,7 +3,7 @@
 	"version": "0.0.0",
 	"private": true,
 	"scripts": {
-		"start": "SET DEBUG=eduwork-server:*"
+		"start": "SET DEBUG=eduwork-server:* && node ./bin/www"
 	},
 	"dependencies": {
 		"@casl/ability": "^6.7.0",
@@ -21,7 +21,6 @@
 		"multer": "^1.4.5-lts.1",
 		"passport": "^0.7.0",
 		"passport-local": "^1.0.0",
-		"pug": "2.0.0-beta11",
-		"serverless-http": "^3.2.0"
+		"pug": "2.0.0-beta11"
 	}
 }

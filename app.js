@@ -1,3 +1,4 @@
+require('./database');
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
@@ -72,8 +73,15 @@ app.use(function (err, req, res, next) {
 	}
 });
 
-// module.exports = app;
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-	console.log(`Server is running on port ${PORT}`);
+// MongoDB connection
+const db = require('./database');
+db.once('open', () => {
+	const PORT = process.env.PORT || 5000;
+	app.listen(PORT, () => {
+		console.log(`Server is running on port ${PORT}`);
+	});
+});
+
+db.on('error', (err) => {
+	console.error('MongoDB connection error:', err);
 });
